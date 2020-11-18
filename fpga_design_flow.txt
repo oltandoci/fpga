@@ -1,0 +1,72 @@
+1. Simulation:
+Behavioral simulation, called also RTL simulation, is performed before synthesis. 
+This fast simulation can be used to check the functionality of the design without constraints. 
+Use this simulation frequently to test your code and find logic errors.
+
+2. Synthesis:
+After the design has been entered in the form of code, this phase is where it is translated into an actual circuit with elements such as gates, 
+flip flops, and multipliers among others. Your input HDL is essentially converted into a netlist which lists the logic elements 
+you will be needing for your project and the interconnects needed in the specific hierarchy.
+The process begins with a syntax check once you feed in your HDL based design. 
+It is then optimized by the reduction of logic, elimination of redundant logic, and the reduction of the size of the design 
+while simultaneously making it faster to implement. The last step is to map out the technology by connecting the design to the logic, 
+estimating the associated time, and churning out the design netlists which are subsequently saved.
+FPGA synthesis is performed by dedicated synthesis tools. 
+Cadence, Synopsys and Mentor Graphics are EDA companies that develop, sell and market FPGA synthesis tools.
+
+3. Implementation
+This phase is where the layout of your design will be determined and consists of four steps: 
+- Translate
+- Map
+- Place and Route
+- Timings
+The tools used in this step are provided by the FPGA vendors because they know best how to translate a synthesized netlist into an FPGA.
+The first step for the tools is to gather all the constraints that are set by the user together with the netlist files. 
+These constraints can be regarding the assignment and position of the pins, the requirements regarding timing such as the maximum delay or the input period of the clock.
+Then the tool maps out the implementation by comparing the resource requirement specified in the files to the resources actually available on the FPGA being used. 
+The circuit is divided into the logic blocks or elements in the form of sub blocks. 
+As a result, your entire design is placed in specific logic blocks and is ‘mapped out’ into the FPGA.
+The next step is to connect and route all the signals accordance with the constraints set by the user between all the logic blocks and IO blocks.
+
+4. Generation
+It consist on generating the bitstream for the FPGA.
+
+For Xilinx FPGAs:
+https://www.xilinx.com/support/documentation/sw_manuals/xilinx11/ise_c_implement_fpga_design.htm
+
+XST: Xilinx Synthesis Technology
+NGC: Native Generic Circuit
+NGD: Native Generic Database
+NCD: Native Circuit Description
+UCF: User Constraints File
+
+Here is an example for Spartan 6 FPGA:
+
+The "XST" process synthesizes VHDL, Verilog, or mixed language designs to create Xilinx-specific netlist files known as NGC files.
+NGC files contain both logical design data and constraints(.xdc). 
+XST places the NGC file in your project directory and the file is accepted as input to the Translate (NGDBuild) step of the Implement Design process. 
+
+The "Translate" process merges all of the input netlists (NGC file) and design constraints (UCF file) and outputs a NGD file, 
+which describes the logical design reduced to Xilinx primitives. 
+
+The "Map" process maps the logic defined by an NGD file into FPGA elements, such as CLBs and IOBs. 
+The output design is a NCD file that physically represents the design mapped to the components in the Xilinx FPGA. 
+
+The "Place and Route" process takes a mapped NCD file, places and routes the design, and produces an NCD file 
+that is used as input for bitstream generation. 
+
+The "Generate Programming File" process produces a bitstream for Xilinx device configuration. 
+After the design is completely routed, you must configure the device so it can execute the desired function.
+
+The "Timing Report" verifies the timing characteristics of the design (.ncd file) generating a summary timing report. 
+Timing constraints contained in the .pcf file are the timing constraints for the design. 
+This generates the report .twr file.
+
+
+User commands:
+xst -intstyle ise -ifn "top.xst" -ofn "top.syr" 
+ngdbuild -intstyle ise -dd _ngo -nt timestamp -uc top.ucf -p xc6slx9-csg324-2 top.ngc top.ngd  
+map -intstyle ise -p xc6slx9-csg324-2 -w -logic_opt off -ol high -t 1 -xt 0 -register_duplication on -r 4 -global_opt off -mt off -ir off -pr off -lc off -power off -o top_map.ncd top.ngd top.pcf 
+par -w -intstyle ise -ol high -xe n -mt off top_map.ncd top.ncd top.pcf 
+trce -intstyle ise -v 3 -s 2 -n 3 -fastpaths -xml top.twx top.ncd -o top.twr top.pcf 
+bitgen -intstyle ise -f top.ut top.ncd 

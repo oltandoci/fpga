@@ -1,0 +1,48 @@
+#1. Install needed packages on Linux only
+sudo apt install zlib zlibc zlib1g zlib-gst zlib1g-dev gtkwave
+
+#2. Install gtkwave
+Linux: sudo apt install gtkwave
+Windows: https://www.youtube.com/watch?v=H2GyAIYwZbw
+
+#3. Install ghdl on Linux/Windows
+
+--3.1. Download ghdl package for Linux/Windows
+
+Go to: https://github.com/ghdl/ghdl/releases
+and choose the release for your PC
+
+--3.2. Buld ghdl from scratch on Linux
+
+**Get GNAT (ADA compiler) for Linux
+https://www.adacore.com/download -> x86 GNU Linux (64 bits):
+gnat-2020-20200429-x86_64-linux-bin
+
+**Install it (for ex. under /opt)
+sudo chmod +x gnat-2020-20200429-x86_64-linux-bin
+./gnat-2020-20200429-x86_64-linux-bin
+
+**Add temporary GNAT binaries to PATH because we need it in order to build ghdl
+export PATH="$PATH:/opt/GNAT/2020/bin/"
+
+**Clone ghdl git repo
+git clone https://github.com/ghdl/ghdl.git
+
+**Build ghdl (before install switch to su to avoid errors)
+cd ghdl/
+./configure --prefix=/usr/local/
+make
+sudo su
+make install
+
+**Check ghdl binary
+ls /usr/local/bin/
+
+
+#4. Links
+icarus verilog: http://iverilog.icarus.com/
+yosys: http://www.clifford.at/yosys/
+gtkwave user manual: http://gtkwave.sourceforge.net/gtkwave.pdf
+list of open-source simulators: https://en.wikipedia.org/wiki/List_of_HDL_simulators
+Spartan LX9 bitstream generator: git clone https://github.com/Wolfgang-Spraul/fpgatools.git
+Use scripts to run ghdl on Windows PC: https://www.youtube.com/watch?v=5788e3cMw3I
