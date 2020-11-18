@@ -2,7 +2,7 @@
    git clone https://github.com/oltandoci/python.git
 
 2. Copy python/pytoolbox/ here if you don't want to modify relative paths,
-   or put it in your personal folder which is a in the PATH (a good solution).
+   or put it in your personal folder which is in the PATH (a good solution).
    In this case just update/remove the import... paths
    
 3. Generate input stimuli for VHDL tb: 
