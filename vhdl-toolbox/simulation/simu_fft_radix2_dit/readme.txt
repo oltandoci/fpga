@@ -14,7 +14,7 @@
    
 5. Check some signals on GTK Wave:
 
-* Chose the signals
+* Get signals
 - From the SST pane, expand the "top" entity
 - Clik on "p_data_re_o", it will be put in the Signals pane below
 - Just drag and drop it in the Sigals pane above under the Time
