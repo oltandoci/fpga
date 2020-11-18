@@ -1,5 +1,5 @@
 #1. Install needed packages on Linux only
-sudo apt install zlib zlibc zlib1g zlib-gst zlib1g-dev gtkwave
+sudo apt install zlibc zlib1g zlib-gst zlib1g-dev
 
 #2. Install gtkwave
 Linux: sudo apt install gtkwave
