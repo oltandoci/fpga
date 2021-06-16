@@ -1,0 +1,82 @@
+#1. Install python on Linux/Windows
+
+Go to:
+https://www.python.org/downloads/
+(Also on Linux you can install it directly with "sudo apt install python3.5" for ex.)
+We need the module matplotlib that you can install easily with pip install matplotlib
+
+#2. Install needed packages on Linux only
+
+sudo apt install zlibc zlib1g zlib-gst zlib1g-dev
+
+#3. Install gtkwave
+
+Linux:
+sudo apt install gtkwave
+
+Windows:
+https://www.youtube.com/watch?v=H2GyAIYwZbw
+Or, directly from: https://sourceforge.net/projects/gtkwave/
+Make sure to add bin folder of gtkwave in the user path
+
+#4. Install ghdl on Linux/Windows
+
+Go to:
+https://github.com/ghdl/ghdl/releases/tag/nightly
+and choose the release for your PC.
+The compressed file is in zst format.
+
+Linux:
+sudo apt install zstd
+tar -I zstd -xvf <file>.pkg.tar.zst
+
+Windows:
+Unzip the file with peazip tool, that can be found at:
+https://peazip.github.io/zstandard-compression-utility.html
+Then, use again peazip to open the tar.
+Make sure to add bin folder of ghdl in the user path
+
+#5. Install GNAT (ADA compiler) tools on Linux/Windows
+
+Since ghdl is developed in ADA language, we need to install GNAT tools.
+Go to:
+https://www.adacore.com/download
+
+Linux:
+Choose x86 GNU Linux (64 bits) gnat-2020-20200429-x86_64-linux-bin
+Install it (for ex. under /opt)
+sudo chmod +x gnat-2020-20200429-x86_64-linux-bin
+./gnat-2020-20200429-x86_64-linux-bin
+
+Add temporary GNAT binaries to PATH because we need it in order to build ghdl
+export PATH="$PATH:/opt/GNAT/2020/bin/"
+
+Windows:
+Choose x86 Windows (64 bits) gnat-2020-20200429-x86_64-windows-bin.exe
+Make sure to add bin folder of GNAT in the user path
+
+
+Tip 1: For Linux users only, if you prefer you can build ghdl from scratch:
+
+- Clone ghdl git repo
+git clone https://github.com/ghdl/ghdl.git
+
+- Build ghdl (before install switch to su to avoid errors)
+cd ghdl/
+./configure --prefix=/usr/local/
+make
+sudo su
+make install
+
+- Check ghdl binary
+ls /usr/local/bin/
+
+
+Tip 2: Links/References
+
+icarus verilog: http://iverilog.icarus.com/
+yosys: http://www.clifford.at/yosys/
+gtkwave user manual: http://gtkwave.sourceforge.net/gtkwave.pdf
+list of open-source simulators: https://en.wikipedia.org/wiki/List_of_HDL_simulators
+Spartan LX9 bitstream generator: git clone https://github.com/Wolfgang-Spraul/fpgatools.git
+Use scripts to run ghdl on Windows PC: https://www.youtube.com/watch?v=5788e3cMw3I
